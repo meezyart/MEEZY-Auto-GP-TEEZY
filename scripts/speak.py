@@ -7,7 +7,7 @@ import gtts
 
 
 # TODO: Nicer names for these ids
-voices = ["ErXwobaYiN019PkySvjV", "EXAVITQu4vr4xnSDxMaL"]
+voices = ["twp2cSU5yBg4LPIafMLF", "bs5SmDJOgpivpgdnDBVu","UDPrIjlXrlkmH5LejzuR"]
 
 tts_headers = {
     "Content-Type": "application/json",

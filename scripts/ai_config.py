@@ -3,13 +3,14 @@ import data
 
 
 class AIConfig:
-    def __init__(self, ai_name="", ai_role="", ai_goals=[]):
+    def __init__(self, ai_name="", ai_role="", ai_goals=[], ai_info="",):
         self.ai_name = ai_name
         self.ai_role = ai_role
         self.ai_goals = ai_goals
+        self.ai_info = ai_info
 
     # Soon this will go in a folder where it remembers more stuff about the run(s)
-    SAVE_FILE = "../ai_settings.yaml"
+    SAVE_FILE = "./ai_settings.yaml"
 
     @classmethod
     def load(cls, config_file=SAVE_FILE):
@@ -23,11 +24,12 @@ class AIConfig:
         ai_name = config_params.get("ai_name", "")
         ai_role = config_params.get("ai_role", "")
         ai_goals = config_params.get("ai_goals", [])
+        ai_info = config_params.get("ai_info", "")
 
-        return cls(ai_name, ai_role, ai_goals)
+        return cls(ai_name, ai_role, ai_goals,ai_info)
 
     def save(self, config_file=SAVE_FILE):
-        config = {"ai_name": self.ai_name, "ai_role": self.ai_role, "ai_goals": self.ai_goals}
+        config = {"ai_name": self.ai_name, "ai_role": self.ai_role, "ai_goals": self.ai_goals, "ai_info": self.ai_info}
         with open(config_file, "w") as file:
             yaml.dump(config, file)
 
@@ -39,5 +41,6 @@ class AIConfig:
         for i, goal in enumerate(self.ai_goals):
             full_prompt += f"{i+1}. {goal}\n"
 
+        full_prompt += f"\n\nAdditional Info:{self.ai_info}"
         full_prompt += f"\n\n{data.load_prompt()}"
         return full_prompt

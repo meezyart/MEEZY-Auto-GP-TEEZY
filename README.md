@@ -41,6 +41,9 @@ Your support is greatly appreciated
   - [🗣️ Speech Mode](#️-speech-mode)
   - [🔍 Google API Keys Configuration](#-google-api-keys-configuration)
     - [Setting up environment variables](#setting-up-environment-variables)
+  - [🌲 Pinecone API Key Setup](#-pinecone-api-key-setup)
+    - [Setting up environment variables](#setting-up-environment-variables-1)
+  - [View Memory Usage](#view-memory-usage)
   - [💀 Continuous Mode ⚠️](#-continuous-mode-️)
   - [GPT3.5 ONLY Mode](#gpt35-only-mode)
   - [⚠️ Limitations](#️-limitations)
@@ -172,8 +175,8 @@ Or you can set them in the `.env` file.
 
 ## 💀 Continuous Mode ⚠️
 Run the AI **without** user authorisation, 100% automated.
-Continuous mode is not recommended. 
-It is potentially dangerous and may cause your AI to run forever or carry out actions you would not usually authorise. 
+Continuous mode is not recommended.
+It is potentially dangerous and may cause your AI to run forever or carry out actions you would not usually authorise.
 Use at your own risk.
 1. Run the `main.py` Python script in your terminal:
 ```
@@ -208,7 +211,7 @@ As an autonomous experiment, Auto-GPT may generate content or take actions that 
 
 By using Auto-GPT, you agree to indemnify, defend, and hold harmless the developers, contributors, and any affiliated parties from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising from your use of this software or your violation of these terms.
 
-## 🐦 Connect with Us on Twitter 
+## 🐦 Connect with Us on Twitter
 
 Stay up-to-date with the latest news, updates, and insights about Auto-GPT by following our Twitter accounts. Engage with the developer and the AI's own account for interesting discussions, project updates, and more.
 
@@ -216,4 +219,3 @@ Stay up-to-date with the latest news, updates, and insights about Auto-GPT by fo
 - **Entrepreneur-GPT**: Join the conversation with the AI itself by following [@En_GPT](https://twitter.com/En_GPT). Share your experiences, discuss the AI's outputs, and engage with the growing community of users.
 
 We look forward to connecting with you and hearing your thoughts, ideas, and experiences with Auto-GPT. Join us on Twitter and let's explore the future of AI together!
-

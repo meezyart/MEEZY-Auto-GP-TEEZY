@@ -18,11 +18,11 @@ def execute_python_file(file):
     try:
         client = docker.from_env()
 
-        # You can replace 'python:3.8' with the desired Python image/version
+        # You can replace 'python:p' with the desired Python image/version
         # You can find available Python images on Docker Hub:
         # https://hub.docker.com/_/python
         container = client.containers.run(
-            'python:3.10',
+            'python:3.11.3',
             f'python {file}',
             volumes={
                 os.path.abspath(workspace_folder): {
@@ -38,8 +38,53 @@ def execute_python_file(file):
         logs = container.logs().decode('utf-8')
         container.remove()
 
-        # print(f"Execution complete. Output: {output}")
-        # print(f"Logs: {logs}") 
+        print(f"Execution complete. Output: {output}")
+        print(f"Logs: {logs}")
+
+        return logs
+
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+
+def execute_javascript_file(file):
+    workspace_folder = "auto_gpt_js_workspace"
+
+    print (f"Executing file '{file}' in workspace '{workspace_folder}'")
+
+
+
+    file_path = os.path.join(workspace_folder, file)
+
+    if not os.path.isfile(file_path):
+        return f"Error: File '{file}' does not exist."
+
+    try:
+        client = docker.from_env()
+
+        # You can replace 'python:p' with the desired Python image/version
+        # You can find available Python images on Docker Hub:
+        # https://hub.docker.com/_/python
+        container = client.containers.run(
+            'python:3.11.3',
+            'node:current-alpine3.16 '
+            f'python {file}',
+            volumes={
+                os.path.abspath(workspace_folder): {
+                    'bind': '/workspace',
+                    'mode': 'ro'}},
+            working_dir='/workspace',
+            stderr=True,
+            stdout=True,
+            detach=True,
+        )
+
+        output = container.wait()
+        logs = container.logs().decode('utf-8')
+        container.remove()
+
+        print(f"Execution complete. Output: {output}")
+        print(f"Logs: {logs}")
 
         return logs
 

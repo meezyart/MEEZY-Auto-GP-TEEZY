@@ -5,7 +5,11 @@ scripts/__pycache__/keys.cpython-310.pyc
 package-lock.json
 *.pyc
 auto_gpt_workspace/*
+auto_gpt_workspace_*
 *.mpeg
 .env
+last_run_ai_settings.yaml
+
+ai_settings*
 outputs/*
 ai_settings.yaml

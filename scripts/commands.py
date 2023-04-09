@@ -6,6 +6,21 @@ import agent_manager as agents
 import speak
 from config import Config
 import ai_functions as ai
+from react_operations import (
+    create_react_app,
+    run_react_app,
+    build_react_app,
+    run_react_app_tests,
+    eject_react_app,
+    install_packages,
+    create_component,
+    update_component,
+    update_app_js,
+    add_styling_css
+)
+from git_operations import create_github_repo, clone_github_repo, add_file_to_github_repo, push_to_github_repo
+from file_operations import read_file, write_to_file, append_to_file, delete_file, search_files
+from execute_code import execute_python_file
 from file_operations import read_file, write_to_file, append_to_file, delete_file, search_files
 from execute_code import execute_python_file
 from json_parser import fix_and_parse_json
@@ -26,15 +41,15 @@ def is_valid_int(value):
 def get_command(response):
     try:
         response_json = fix_and_parse_json(response)
-        
+
         if "command" not in response_json:
             return "Error:" , "Missing 'command' object in JSON"
-        
+
         command = response_json["command"]
 
         if "name" not in command:
             return "Error:", "Missing 'name' field in 'command' object"
-        
+
         command_name = command["name"]
 
         # Use an empty dictionary if 'args' field is not present in 'command' object
@@ -55,7 +70,7 @@ def execute_command(command_name, arguments):
     memory = PineconeMemory()
     try:
         if command_name == "google":
-            
+
             # Check if the Google API key is set and use the official search method
             # If the API key is not set or has only whitespaces, use the unofficial search method
             if cfg.google_api_key and (cfg.google_api_key.strip() if cfg.google_api_key else None):
@@ -89,6 +104,8 @@ def execute_command(command_name, arguments):
             return delete_file(arguments["file"])
         elif command_name == "search_files":
             return search_files(arguments["directory"])
+        elif command_name == "install_packages":
+            return install_packages(arguments["text"])
         elif command_name == "browse_website":
             return browse_website(arguments["url"], arguments["question"])
         # TODO: Change these to take in a file rather than pasted code, if
@@ -109,7 +126,6 @@ def execute_command(command_name, arguments):
     # All errors, return "Error: + error message"
     except Exception as e:
         return "Error: " + str(e)
-
 
 def get_datetime():
     return "Current date and time: " + \
@@ -135,20 +151,20 @@ def google_official_search(query, num_results=8):
 
         # Initialize the Custom Search API service
         service = build("customsearch", "v1", developerKey=api_key)
-        
+
         # Send the search query and retrieve the results
         result = service.cse().list(q=query, cx=custom_search_engine_id, num=num_results).execute()
 
         # Extract the search result items from the response
         search_results = result.get("items", [])
-        
+
         # Create a list of only the URLs from the search results
         search_results_links = [item["link"] for item in search_results]
 
     except HttpError as e:
         # Handle errors in the API call
         error_details = json.loads(e.content.decode())
-        
+
         # Check if the error is related to an invalid or missing API key
         if error_details.get("error", {}).get("code") == 403 and "invalid API key" in error_details.get("error", {}).get("message", ""):
             return "Error: The provided Google API key is invalid or missing."

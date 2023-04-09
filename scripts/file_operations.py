@@ -3,9 +3,12 @@ import os.path
 
 # Set a dedicated folder for file I/O
 working_directory = "auto_gpt_workspace"
+output_directory = "outputs/public_output"
 
 if not os.path.exists(working_directory):
     os.makedirs(working_directory)
+if not os.path.exists(output_directory):
+    os.makedirs(output_directory)
 
 
 def safe_join(base, *paths):
@@ -20,7 +23,7 @@ def safe_join(base, *paths):
 
 def read_file(filename):
     try:
-        filepath = safe_join(working_directory, filename)
+        filepath = safe_join(working_directory | output_directory, filename)
         with open(filepath, "r") as f:
             content = f.read()
         return content
@@ -43,7 +46,7 @@ def write_to_file(filename, text):
 
 def append_to_file(filename, text):
     try:
-        filepath = safe_join(working_directory, filename)
+        filepath = safe_join(working_directory | output_directory, filename)
         with open(filepath, "a") as f:
             f.write(text)
         return "Text appended successfully."
@@ -53,7 +56,7 @@ def append_to_file(filename, text):
 
 def delete_file(filename):
     try:
-        filepath = safe_join(working_directory, filename)
+        filepath = safe_join(working_directory | output_directory, filename)
         os.remove(filepath)
         return "File deleted successfully."
     except Exception as e:
